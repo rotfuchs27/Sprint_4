@@ -89,4 +89,22 @@ class TestBooksCollector:
             
         collector_with_books.delete_book_from_favorites('Зов Ктулху')
         assert len(collector_with_books.get_list_of_favorites_books()) == 1  
-        assert collector_with_books.get_list_of_favorites_books() == ['Чук и Гек']    
+        assert collector_with_books.get_list_of_favorites_books() == ['Чук и Гек'] 
+
+    def test_get_books_genre_return_books_genres_success(self,collector_with_books):
+        result = collector_with_books.get_books_genre()
+        
+        assert result['Хоббит или туда и обратно'] == 'Фантастика'
+        assert result['Зов Ктулху'] == 'Ужасы'
+        assert result['Клуб убийств по четвергам'] == 'Детективы'
+        assert result['Чук и Гек'] == 'Мультфильмы'
+        assert result['Благие знамения'] == 'Комедии'
+        assert result['Война и мир'] == ''
+
+    def test_get_list_of_favorites_books_books_added_to_list_books_returned(self, collector_with_books):
+        list = ['Граф Дракула','Клуб убийств по четвергам']
+        for i in list:
+            collector_with_books.add_book_in_favorites(i)        
+        assert i in collector_with_books.get_list_of_favorites_books()   
+        assert len(collector_with_books.get_list_of_favorites_books()) == 2
+        assert collector_with_books.get_list_of_favorites_books() == ['Граф Дракула','Клуб убийств по четвергам']
